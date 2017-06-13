@@ -15,7 +15,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        return true
+    }
+    
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        self.window?.makeKeyAndVisible()
+        
+        var tabItems = [UINavigationController]()
+        
+        let allPlaceViewController = AllPlaceViewController()
+        let allPlaceNavigationController = UINavigationController(rootViewController: allPlaceViewController)
+        allPlaceNavigationController.navigationBar.isTranslucent = false
+        allPlaceNavigationController.tabBarItem.title = "Автомойки"
+        allPlaceNavigationController.tabBarItem.image = UIImage(named: "home")?.withRenderingMode(.alwaysOriginal)
+        allPlaceNavigationController.tabBarItem.selectedImage = UIImage(named: "homeSelected")?.withRenderingMode(.alwaysOriginal)
+        tabItems.append(allPlaceNavigationController)
+        
+        let favoritePlaceViewController = FavoritePlaceViewController()
+        let favoritePlaceNavigationController = UINavigationController(rootViewController: favoritePlaceViewController)
+        favoritePlaceNavigationController.title = "Избранные"
+        favoritePlaceNavigationController.tabBarItem.image = UIImage(named: "fav")?.withRenderingMode(.alwaysTemplate)
+        favoritePlaceNavigationController.tabBarItem.selectedImage = UIImage(named: "favSelected")?.withRenderingMode(.alwaysOriginal)
+        tabItems.append(favoritePlaceNavigationController)
+        
+        let orderViewController = OrderViewController()
+        let orderNavigationController = UINavigationController(rootViewController: orderViewController)
+        orderNavigationController.title = "Мои Заказы"
+        orderNavigationController.navigationBar.isTranslucent = false
+        orderNavigationController.tabBarItem.image = UIImage(named: "order")?.withRenderingMode(.alwaysOriginal)
+        tabItems.append(orderNavigationController)
+        
+        let accountViewController = AccountViewController()
+        let accountNavigationController = UINavigationController(rootViewController: accountViewController)
+        accountNavigationController.title = "Аккаунт"
+        accountNavigationController.navigationBar.isTranslucent = false
+        accountNavigationController.tabBarItem.image = UIImage(named: "order")?.withRenderingMode(.alwaysOriginal)
+        tabItems.append(accountNavigationController)
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = tabItems
+        tabBarController.tabBar.isTranslucent = false
+        
+        tabBarController.selectedIndex = 0
+        tabBarController.tabBar.layer.borderColor = UIColor.clear.cgColor
+        tabBarController.tabBar.clipsToBounds = true
+        
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor.black], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName : UIColor().mainColor()], for: .selected)
+        
+        UINavigationBar.appearance().tintColor = UIColor.blue
+        
+        self.window?.rootViewController = tabBarController
+        
+        if let phoneNumber = UserDefaults.standard.value(forKey: "phoneNumber") as? String, let password = UserDefaults.standard.value(forKey: "password") as? String {
+            ApiHelper.loginUser(phoneNumber: phoneNumber, password: password) {}
+        } else {
+            self.window?.rootViewController?.present(LoginViewController(), animated: false, completion: nil)
+        }
+        
+        sleep(1)
+        
         return true
     }
 

@@ -28,6 +28,16 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>RisingSun-Bold.otf</string>
+		<string>RisingSun-DemiBold.otf</string>
+		<string>RisingSun-Light.otf</string>
+		<string>RisingSun-Regular.otf</string>
+		<string>Carlito-Bold.ttf</string>
+		<string>RisingSun-Black.otf</string>
+		<string>LiberationSerif-Bold.ttf</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

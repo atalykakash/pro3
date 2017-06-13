@@ -7,21 +7,121 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EA5BA9EFC021C758F17E744 /* Pods_Pro3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17F35A943F2FF14C2C20E1D7 /* Pods_Pro3.framework */; };
+		8407C0941EC1E7580066EA4F /* IndividualCarwashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407C0931EC1E7580066EA4F /* IndividualCarwashViewController.swift */; };
+		8407C0961EC1E7870066EA4F /* IndividualCarwashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407C0951EC1E7870066EA4F /* IndividualCarwashView.swift */; };
+		8407C0981EC1EE570066EA4F /* CarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407C0971EC1EE570066EA4F /* CarType.swift */; };
+		8407C09A1EC2188E0066EA4F /* CarTypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407C0991EC2188E0066EA4F /* CarTypeCollectionViewCell.swift */; };
+		8407C09C1EC251190066EA4F /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407C09B1EC251190066EA4F /* Service.swift */; };
+		8407C09E1EC253BF0066EA4F /* ServiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8407C09D1EC253BF0066EA4F /* ServiceTableViewCell.swift */; };
+		842054E21ECEA5B000AEEB55 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842054E11ECEA5B000AEEB55 /* Box.swift */; };
+		843444341EB9AE3900203C11 /* ApiHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843444331EB9AE3900203C11 /* ApiHelper.swift */; };
+		843444361EB9BD1A00203C11 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843444351EB9BD1A00203C11 /* City.swift */; };
+		8441B9111EB7B2B5008FAB0C /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441B9101EB7B2B5008FAB0C /* WelcomeView.swift */; };
+		8441B9131EB7B4B5008FAB0C /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8441B9121EB7B4B5008FAB0C /* WelcomeViewController.swift */; };
+		845D21FD1EE95D520053B630 /* ProgressIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845D21FC1EE95D520053B630 /* ProgressIndicatorView.swift */; };
+		8460B4281EE6B59100DB7A71 /* CarWashInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8460B4271EE6B59100DB7A71 /* CarWashInfo.swift */; };
+		8469E09C1ED5F9060077922A /* LiberationSerif-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8469E09B1ED5F9060077922A /* LiberationSerif-Bold.ttf */; };
+		8469E09E1ED6069E0077922A /* Carlito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8469E09D1ED6069E0077922A /* Carlito-Bold.ttf */; };
+		8469E0A01ED61ADD0077922A /* RisingSun-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8469E09F1ED61ADD0077922A /* RisingSun-Black.otf */; };
+		8469E0A21ED61C310077922A /* RisingSun-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8469E0A11ED61C310077922A /* RisingSun-Light.otf */; };
+		846A0C041EBC5C1A001D5E0C /* CarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A0C031EBC5C1A001D5E0C /* CarView.swift */; };
+		846A0C061EBC5C6F001D5E0C /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846A0C051EBC5C6F001D5E0C /* Car.swift */; };
+		846C69361EBBB62D0064645F /* CityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846C69351EBBB62D0064645F /* CityView.swift */; };
+		8489B5261EEC198F00DC64DC /* RisingSun-DemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8489B5251EEC198F00DC64DC /* RisingSun-DemiBold.otf */; };
+		849A73991EC777E50060F02D /* SlotCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849A73981EC777E50060F02D /* SlotCollectionViewCell.swift */; };
+		849C230A1EED5C750071ADBD /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849C23091EED5C750071ADBD /* AccountView.swift */; };
+		84AB7B181ED423AC00D40912 /* OrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AB7B171ED423AC00D40912 /* OrderView.swift */; };
+		84AB7B1B1ED424D300D40912 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AB7B1A1ED424D300D40912 /* Order.swift */; };
+		84AB7B1D1ED4290B00D40912 /* OrderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84AB7B1C1ED4290B00D40912 /* OrderCollectionViewCell.swift */; };
+		84AB7B1F1ED4543800D40912 /* GoudyBookletter1911.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84AB7B1E1ED4543800D40912 /* GoudyBookletter1911.otf */; };
+		84AB7B211ED4547900D40912 /* Lobster 1.4.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84AB7B201ED4547900D40912 /* Lobster 1.4.otf */; };
+		84C5F46B1EC4768A00A2A1BC /* TimeslotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C5F46A1EC4768A00A2A1BC /* TimeslotView.swift */; };
+		84D5AC431EBCFC1C00B78791 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D5AC421EBCFC1C00B78791 /* LoginView.swift */; };
+		84D5AC451EBD07E900B78791 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D5AC441EBD07E900B78791 /* LoginViewController.swift */; };
+		84E0D0AF1ECC004E00E06D2D /* BoxTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0D0AE1ECC004E00E06D2D /* BoxTimeInterval.swift */; };
+		84E866611EBDB1A70044B56A /* CarWash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E866601EBDB1A70044B56A /* CarWash.swift */; };
+		84E866631EBDBB6F0044B56A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E866621EBDBB6F0044B56A /* User.swift */; };
+		84E9B6BF1EBF024F0047E25B /* AllPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9B6BE1EBF024F0047E25B /* AllPlaceView.swift */; };
+		84E9B6C11EBF09A60047E25B /* CarwashCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9B6C01EBF09A60047E25B /* CarwashCollectionViewCell.swift */; };
+		84EDB5861EEAB7A80092E5B6 /* RisingSun-Hairline.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84EDB5841EEAB7A80092E5B6 /* RisingSun-Hairline.otf */; };
+		84EDB5871EEAB7A80092E5B6 /* RisingSun-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84EDB5851EEAB7A80092E5B6 /* RisingSun-Regular.otf */; };
+		84EDB5891EEABDB80092E5B6 /* RisingSun-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 84EDB5881EEABDB80092E5B6 /* RisingSun-Bold.otf */; };
 		84FB5DEE1EB6FEDE00B24F73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5DED1EB6FEDE00B24F73 /* AppDelegate.swift */; };
-		84FB5DF01EB6FEDE00B24F73 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5DEF1EB6FEDE00B24F73 /* ViewController.swift */; };
 		84FB5DF31EB6FEDE00B24F73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84FB5DF11EB6FEDE00B24F73 /* Main.storyboard */; };
 		84FB5DF51EB6FEDE00B24F73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FB5DF41EB6FEDE00B24F73 /* Assets.xcassets */; };
 		84FB5DF81EB6FEDE00B24F73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84FB5DF61EB6FEDE00B24F73 /* LaunchScreen.storyboard */; };
+		84FB5E001EB7007C00B24F73 /* FavoritePlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5DFF1EB7007C00B24F73 /* FavoritePlaceViewController.swift */; };
+		84FB5E021EB7008E00B24F73 /* AllPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5E011EB7008E00B24F73 /* AllPlaceViewController.swift */; };
+		84FB5E041EB7009900B24F73 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5E031EB7009900B24F73 /* OrderViewController.swift */; };
+		84FB5E061EB700A700B24F73 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5E051EB700A700B24F73 /* AccountViewController.swift */; };
+		84FB5E091EB702EE00B24F73 /* FavoritePlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5E081EB702EE00B24F73 /* FavoritePlaceView.swift */; };
+		84FB5E0B1EB7036A00B24F73 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 84FB5E0A1EB7036A00B24F73 /* Podfile */; };
+		84FB5E0E1EB71F4600B24F73 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5E0D1EB71F4600B24F73 /* KeychainService.swift */; };
+		84FB5E101EB72BD600B24F73 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5E0F1EB72BD600B24F73 /* RegisterView.swift */; };
+		84FB5E121EB72E2C00B24F73 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5E111EB72E2C00B24F73 /* RegisterViewController.swift */; };
+		84FB5E141EB72EEB00B24F73 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB5E131EB72EEB00B24F73 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		17F35A943F2FF14C2C20E1D7 /* Pods_Pro3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pro3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E5A45B9D9FC75DBC2338E14 /* Pods-Pro3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pro3.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Pro3/Pods-Pro3.debug.xcconfig"; sourceTree = "<group>"; };
+		7FF23B0E9C0BFEAF5B63B2E8 /* Pods-Pro3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pro3.release.xcconfig"; path = "Pods/Target Support Files/Pods-Pro3/Pods-Pro3.release.xcconfig"; sourceTree = "<group>"; };
+		8407C0931EC1E7580066EA4F /* IndividualCarwashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndividualCarwashViewController.swift; sourceTree = "<group>"; };
+		8407C0951EC1E7870066EA4F /* IndividualCarwashView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndividualCarwashView.swift; sourceTree = "<group>"; };
+		8407C0971EC1EE570066EA4F /* CarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarType.swift; sourceTree = "<group>"; };
+		8407C0991EC2188E0066EA4F /* CarTypeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTypeCollectionViewCell.swift; sourceTree = "<group>"; };
+		8407C09B1EC251190066EA4F /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		8407C09D1EC253BF0066EA4F /* ServiceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceTableViewCell.swift; sourceTree = "<group>"; };
+		842054E11ECEA5B000AEEB55 /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
+		843444331EB9AE3900203C11 /* ApiHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiHelper.swift; sourceTree = "<group>"; };
+		843444351EB9BD1A00203C11 /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		8441B9101EB7B2B5008FAB0C /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		8441B9121EB7B4B5008FAB0C /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		845D21FC1EE95D520053B630 /* ProgressIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressIndicatorView.swift; sourceTree = "<group>"; };
+		8460B4271EE6B59100DB7A71 /* CarWashInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarWashInfo.swift; sourceTree = "<group>"; };
+		8469E09B1ED5F9060077922A /* LiberationSerif-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LiberationSerif-Bold.ttf"; sourceTree = "<group>"; };
+		8469E09D1ED6069E0077922A /* Carlito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Carlito-Bold.ttf"; sourceTree = "<group>"; };
+		8469E09F1ED61ADD0077922A /* RisingSun-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RisingSun-Black.otf"; sourceTree = "<group>"; };
+		8469E0A11ED61C310077922A /* RisingSun-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RisingSun-Light.otf"; sourceTree = "<group>"; };
+		846A0C031EBC5C1A001D5E0C /* CarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarView.swift; sourceTree = "<group>"; };
+		846A0C051EBC5C6F001D5E0C /* Car.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		846C69351EBBB62D0064645F /* CityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityView.swift; sourceTree = "<group>"; };
+		8489B5251EEC198F00DC64DC /* RisingSun-DemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RisingSun-DemiBold.otf"; sourceTree = "<group>"; };
+		849A73981EC777E50060F02D /* SlotCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlotCollectionViewCell.swift; sourceTree = "<group>"; };
+		849C23091EED5C750071ADBD /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		84AB7B171ED423AC00D40912 /* OrderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderView.swift; sourceTree = "<group>"; };
+		84AB7B1A1ED424D300D40912 /* Order.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		84AB7B1C1ED4290B00D40912 /* OrderCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderCollectionViewCell.swift; sourceTree = "<group>"; };
+		84AB7B1E1ED4543800D40912 /* GoudyBookletter1911.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GoudyBookletter1911.otf; sourceTree = "<group>"; };
+		84AB7B201ED4547900D40912 /* Lobster 1.4.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lobster 1.4.otf"; sourceTree = "<group>"; };
+		84C5F46A1EC4768A00A2A1BC /* TimeslotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeslotView.swift; sourceTree = "<group>"; };
+		84D5AC421EBCFC1C00B78791 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		84D5AC441EBD07E900B78791 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		84E0D0AE1ECC004E00E06D2D /* BoxTimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxTimeInterval.swift; sourceTree = "<group>"; };
+		84E866601EBDB1A70044B56A /* CarWash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarWash.swift; sourceTree = "<group>"; };
+		84E866621EBDBB6F0044B56A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		84E9B6BE1EBF024F0047E25B /* AllPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPlaceView.swift; sourceTree = "<group>"; };
+		84E9B6C01EBF09A60047E25B /* CarwashCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarwashCollectionViewCell.swift; sourceTree = "<group>"; };
+		84EDB5841EEAB7A80092E5B6 /* RisingSun-Hairline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RisingSun-Hairline.otf"; sourceTree = "<group>"; };
+		84EDB5851EEAB7A80092E5B6 /* RisingSun-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RisingSun-Regular.otf"; sourceTree = "<group>"; };
+		84EDB5881EEABDB80092E5B6 /* RisingSun-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RisingSun-Bold.otf"; sourceTree = "<group>"; };
 		84FB5DEA1EB6FEDE00B24F73 /* Pro3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pro3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FB5DED1EB6FEDE00B24F73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		84FB5DEF1EB6FEDE00B24F73 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		84FB5DF21EB6FEDE00B24F73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		84FB5DF41EB6FEDE00B24F73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84FB5DF71EB6FEDE00B24F73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84FB5DF91EB6FEDE00B24F73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84FB5DFF1EB7007C00B24F73 /* FavoritePlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritePlaceViewController.swift; sourceTree = "<group>"; };
+		84FB5E011EB7008E00B24F73 /* AllPlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPlaceViewController.swift; sourceTree = "<group>"; };
+		84FB5E031EB7009900B24F73 /* OrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		84FB5E051EB700A700B24F73 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		84FB5E081EB702EE00B24F73 /* FavoritePlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritePlaceView.swift; sourceTree = "<group>"; };
+		84FB5E0A1EB7036A00B24F73 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		84FB5E0D1EB71F4600B24F73 /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		84FB5E0F1EB72BD600B24F73 /* RegisterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		84FB5E111EB72E2C00B24F73 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		84FB5E131EB72EEB00B24F73 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +129,70 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EA5BA9EFC021C758F17E744 /* Pods_Pro3.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15646018749A4FED1DAC3B63 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				17F35A943F2FF14C2C20E1D7 /* Pods_Pro3.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8441B90F1EB7B2A1008FAB0C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84E9B6BE1EBF024F0047E25B /* AllPlaceView.swift */,
+				8407C0951EC1E7870066EA4F /* IndividualCarwashView.swift */,
+				84FB5E081EB702EE00B24F73 /* FavoritePlaceView.swift */,
+				8441B9101EB7B2B5008FAB0C /* WelcomeView.swift */,
+				84FB5E0F1EB72BD600B24F73 /* RegisterView.swift */,
+				84D5AC421EBCFC1C00B78791 /* LoginView.swift */,
+				846C69351EBBB62D0064645F /* CityView.swift */,
+				846A0C031EBC5C1A001D5E0C /* CarView.swift */,
+				84E9B6C01EBF09A60047E25B /* CarwashCollectionViewCell.swift */,
+				8407C0991EC2188E0066EA4F /* CarTypeCollectionViewCell.swift */,
+				8407C09D1EC253BF0066EA4F /* ServiceTableViewCell.swift */,
+				84C5F46A1EC4768A00A2A1BC /* TimeslotView.swift */,
+				849A73981EC777E50060F02D /* SlotCollectionViewCell.swift */,
+				84AB7B171ED423AC00D40912 /* OrderView.swift */,
+				84AB7B1C1ED4290B00D40912 /* OrderCollectionViewCell.swift */,
+				845D21FC1EE95D520053B630 /* ProgressIndicatorView.swift */,
+				849C23091EED5C750071ADBD /* AccountView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		84AB7B191ED424C500D40912 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				843444351EB9BD1A00203C11 /* City.swift */,
+				846A0C051EBC5C6F001D5E0C /* Car.swift */,
+				84E866601EBDB1A70044B56A /* CarWash.swift */,
+				84E866621EBDBB6F0044B56A /* User.swift */,
+				8407C0971EC1EE570066EA4F /* CarType.swift */,
+				8407C09B1EC251190066EA4F /* Service.swift */,
+				84E0D0AE1ECC004E00E06D2D /* BoxTimeInterval.swift */,
+				842054E11ECEA5B000AEEB55 /* Box.swift */,
+				84AB7B1A1ED424D300D40912 /* Order.swift */,
+				8460B4271EE6B59100DB7A71 /* CarWashInfo.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		84FB5DE11EB6FEDE00B24F73 = {
 			isa = PBXGroup;
 			children = (
+				84FB5E0A1EB7036A00B24F73 /* Podfile */,
 				84FB5DEC1EB6FEDE00B24F73 /* Pro3 */,
 				84FB5DEB1EB6FEDE00B24F73 /* Products */,
+				D136EBE1F43A887B1CF511AB /* Pods */,
+				15646018749A4FED1DAC3B63 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +207,61 @@
 		84FB5DEC1EB6FEDE00B24F73 /* Pro3 */ = {
 			isa = PBXGroup;
 			children = (
+				84FB5E0C1EB70C9B00B24F73 /* Supporting Files */,
+				84FB5E071EB700B000B24F73 /* Controller */,
+				8441B90F1EB7B2A1008FAB0C /* View */,
 				84FB5DED1EB6FEDE00B24F73 /* AppDelegate.swift */,
-				84FB5DEF1EB6FEDE00B24F73 /* ViewController.swift */,
+				84FB5E0D1EB71F4600B24F73 /* KeychainService.swift */,
+				84FB5E131EB72EEB00B24F73 /* Extensions.swift */,
+				843444331EB9AE3900203C11 /* ApiHelper.swift */,
+				84AB7B191ED424C500D40912 /* Model */,
+			);
+			path = Pro3;
+			sourceTree = "<group>";
+		};
+		84FB5E071EB700B000B24F73 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				84FB5E011EB7008E00B24F73 /* AllPlaceViewController.swift */,
+				84FB5DFF1EB7007C00B24F73 /* FavoritePlaceViewController.swift */,
+				84FB5E031EB7009900B24F73 /* OrderViewController.swift */,
+				84FB5E051EB700A700B24F73 /* AccountViewController.swift */,
+				84FB5E111EB72E2C00B24F73 /* RegisterViewController.swift */,
+				8441B9121EB7B4B5008FAB0C /* WelcomeViewController.swift */,
+				84D5AC441EBD07E900B78791 /* LoginViewController.swift */,
+				8407C0931EC1E7580066EA4F /* IndividualCarwashViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		84FB5E0C1EB70C9B00B24F73 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				84FB5DF11EB6FEDE00B24F73 /* Main.storyboard */,
 				84FB5DF41EB6FEDE00B24F73 /* Assets.xcassets */,
 				84FB5DF61EB6FEDE00B24F73 /* LaunchScreen.storyboard */,
 				84FB5DF91EB6FEDE00B24F73 /* Info.plist */,
+				84AB7B1E1ED4543800D40912 /* GoudyBookletter1911.otf */,
+				84AB7B201ED4547900D40912 /* Lobster 1.4.otf */,
+				8469E09B1ED5F9060077922A /* LiberationSerif-Bold.ttf */,
+				8469E09D1ED6069E0077922A /* Carlito-Bold.ttf */,
+				8469E09F1ED61ADD0077922A /* RisingSun-Black.otf */,
+				8469E0A11ED61C310077922A /* RisingSun-Light.otf */,
+				84EDB5841EEAB7A80092E5B6 /* RisingSun-Hairline.otf */,
+				84EDB5881EEABDB80092E5B6 /* RisingSun-Bold.otf */,
+				84EDB5851EEAB7A80092E5B6 /* RisingSun-Regular.otf */,
+				8489B5251EEC198F00DC64DC /* RisingSun-DemiBold.otf */,
 			);
-			path = Pro3;
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D136EBE1F43A887B1CF511AB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2E5A45B9D9FC75DBC2338E14 /* Pods-Pro3.debug.xcconfig */,
+				7FF23B0E9C0BFEAF5B63B2E8 /* Pods-Pro3.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +271,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84FB5DFC1EB6FEDE00B24F73 /* Build configuration list for PBXNativeTarget "Pro3" */;
 			buildPhases = (
+				CF5F03885264F60D8C1B8F0C /* [CP] Check Pods Manifest.lock */,
 				84FB5DE61EB6FEDE00B24F73 /* Sources */,
 				84FB5DE71EB6FEDE00B24F73 /* Frameworks */,
 				84FB5DE81EB6FEDE00B24F73 /* Resources */,
+				155E73A446D3CEC6D10D33A5 /* [CP] Embed Pods Frameworks */,
+				F52B29E01F4C2E3CF8074554 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -96,6 +299,7 @@
 				TargetAttributes = {
 					84FB5DE91EB6FEDE00B24F73 = {
 						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = SQGZ5MNAN6;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -123,21 +327,117 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8469E09E1ED6069E0077922A /* Carlito-Bold.ttf in Resources */,
+				84EDB5871EEAB7A80092E5B6 /* RisingSun-Regular.otf in Resources */,
+				8489B5261EEC198F00DC64DC /* RisingSun-DemiBold.otf in Resources */,
+				84AB7B1F1ED4543800D40912 /* GoudyBookletter1911.otf in Resources */,
 				84FB5DF81EB6FEDE00B24F73 /* LaunchScreen.storyboard in Resources */,
+				84EDB5891EEABDB80092E5B6 /* RisingSun-Bold.otf in Resources */,
 				84FB5DF51EB6FEDE00B24F73 /* Assets.xcassets in Resources */,
+				84FB5E0B1EB7036A00B24F73 /* Podfile in Resources */,
+				84EDB5861EEAB7A80092E5B6 /* RisingSun-Hairline.otf in Resources */,
+				84AB7B211ED4547900D40912 /* Lobster 1.4.otf in Resources */,
 				84FB5DF31EB6FEDE00B24F73 /* Main.storyboard in Resources */,
+				8469E09C1ED5F9060077922A /* LiberationSerif-Bold.ttf in Resources */,
+				8469E0A01ED61ADD0077922A /* RisingSun-Black.otf in Resources */,
+				8469E0A21ED61C310077922A /* RisingSun-Light.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		155E73A446D3CEC6D10D33A5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Pro3/Pods-Pro3-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF5F03885264F60D8C1B8F0C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F52B29E01F4C2E3CF8074554 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Pro3/Pods-Pro3-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		84FB5DE61EB6FEDE00B24F73 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84FB5DF01EB6FEDE00B24F73 /* ViewController.swift in Sources */,
+				84FB5E091EB702EE00B24F73 /* FavoritePlaceView.swift in Sources */,
+				846C69361EBBB62D0064645F /* CityView.swift in Sources */,
+				84E9B6C11EBF09A60047E25B /* CarwashCollectionViewCell.swift in Sources */,
+				84E0D0AF1ECC004E00E06D2D /* BoxTimeInterval.swift in Sources */,
+				8460B4281EE6B59100DB7A71 /* CarWashInfo.swift in Sources */,
+				84FB5E001EB7007C00B24F73 /* FavoritePlaceViewController.swift in Sources */,
+				84FB5E061EB700A700B24F73 /* AccountViewController.swift in Sources */,
+				84D5AC451EBD07E900B78791 /* LoginViewController.swift in Sources */,
+				84FB5E021EB7008E00B24F73 /* AllPlaceViewController.swift in Sources */,
+				84E866631EBDBB6F0044B56A /* User.swift in Sources */,
+				8407C0941EC1E7580066EA4F /* IndividualCarwashViewController.swift in Sources */,
+				84FB5E101EB72BD600B24F73 /* RegisterView.swift in Sources */,
+				84FB5E141EB72EEB00B24F73 /* Extensions.swift in Sources */,
+				8407C09A1EC2188E0066EA4F /* CarTypeCollectionViewCell.swift in Sources */,
+				843444361EB9BD1A00203C11 /* City.swift in Sources */,
+				84FB5E0E1EB71F4600B24F73 /* KeychainService.swift in Sources */,
+				846A0C041EBC5C1A001D5E0C /* CarView.swift in Sources */,
+				8407C09C1EC251190066EA4F /* Service.swift in Sources */,
+				8407C09E1EC253BF0066EA4F /* ServiceTableViewCell.swift in Sources */,
+				8407C0981EC1EE570066EA4F /* CarType.swift in Sources */,
+				84AB7B1D1ED4290B00D40912 /* OrderCollectionViewCell.swift in Sources */,
+				849A73991EC777E50060F02D /* SlotCollectionViewCell.swift in Sources */,
+				84FB5E121EB72E2C00B24F73 /* RegisterViewController.swift in Sources */,
+				8407C0961EC1E7870066EA4F /* IndividualCarwashView.swift in Sources */,
+				849C230A1EED5C750071ADBD /* AccountView.swift in Sources */,
+				8441B9131EB7B4B5008FAB0C /* WelcomeViewController.swift in Sources */,
+				84E866611EBDB1A70044B56A /* CarWash.swift in Sources */,
+				84D5AC431EBCFC1C00B78791 /* LoginView.swift in Sources */,
+				845D21FD1EE95D520053B630 /* ProgressIndicatorView.swift in Sources */,
+				84C5F46B1EC4768A00A2A1BC /* TimeslotView.swift in Sources */,
+				846A0C061EBC5C6F001D5E0C /* Car.swift in Sources */,
+				84AB7B1B1ED424D300D40912 /* Order.swift in Sources */,
+				842054E21ECEA5B000AEEB55 /* Box.swift in Sources */,
+				843444341EB9AE3900203C11 /* ApiHelper.swift in Sources */,
 				84FB5DEE1EB6FEDE00B24F73 /* AppDelegate.swift in Sources */,
+				8441B9111EB7B2B5008FAB0C /* WelcomeView.swift in Sources */,
+				84AB7B181ED423AC00D40912 /* OrderView.swift in Sources */,
+				84E9B6BF1EBF024F0047E25B /* AllPlaceView.swift in Sources */,
+				84FB5E041EB7009900B24F73 /* OrderViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,10 +556,13 @@
 		};
 		84FB5DFD1EB6FEDE00B24F73 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E5A45B9D9FC75DBC2338E14 /* Pods-Pro3.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = SQGZ5MNAN6;
 				INFOPLIST_FILE = Pro3/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = com.calc.aakash.Pro3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -268,10 +571,13 @@
 		};
 		84FB5DFE1EB6FEDE00B24F73 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7FF23B0E9C0BFEAF5B63B2E8 /* Pods-Pro3.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = SQGZ5MNAN6;
 				INFOPLIST_FILE = Pro3/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-Xfrontend -debug-time-function-bodies";
 				PRODUCT_BUNDLE_IDENTIFIER = com.calc.aakash.Pro3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
@@ -297,6 +603,7 @@
 				84FB5DFE1EB6FEDE00B24F73 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
