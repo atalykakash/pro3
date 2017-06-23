@@ -30,8 +30,20 @@ class RegisterViewController: UIViewController, DismissRegisterViewControllerDel
     }
     
     func dismissViewController() {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            appDelegate.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.window?.rootViewController?.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func presentAlertController(message: String) {
+        DispatchQueue.main.async {
+            self.registerView.progressView.isHidden = true
+            let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "Отмена", style: .default, handler: nil)
+            alertController.addAction(alertAction)
+            self.present(alertController, animated: true, completion: nil)
         }
     }
     

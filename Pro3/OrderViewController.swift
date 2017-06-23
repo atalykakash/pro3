@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OrderViewController: UIViewController {
+class OrderViewController: UIViewController, SelectOrderDelegate {
     
     let screenBounds = UIScreen.main.bounds
     
@@ -18,6 +18,14 @@ class OrderViewController: UIViewController {
         super.viewDidLoad()
 
         setup()
+    }
+    
+    func selectOrder(order: Order) {
+        
+    
+        let orderViewController = IndividualOrderViewController()
+        orderViewController.order = order
+        self.navigationController?.pushViewController(orderViewController, animated: true)
     }
     
     func setup() {
@@ -32,6 +40,7 @@ class OrderViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "RisingSun-Light", size: self.screenBounds.width*0.06)!]
         
         self.orderView = OrderView(frame: CGRect(x: 0, y: 0, width: self.screenBounds.width, height: self.screenBounds.height))
+        self.orderView.delegate = self
         self.view.addSubview(self.orderView)
     }
 

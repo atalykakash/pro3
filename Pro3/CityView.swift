@@ -39,9 +39,6 @@ class CityView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         self.clipsToBounds = true
         
-        self.activityIndicatorView.center = CGPoint(x: frame.width/2, y: frame.height/2)
-        self.addSubview(self.activityIndicatorView)
-        
         self.titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height*0.2))
         self.titleLabel.text = "Выберите город"
         self.titleLabel.textAlignment = .center
@@ -54,6 +51,10 @@ class CityView: UIView, UITableViewDelegate, UITableViewDataSource {
         self.tableView.separatorStyle = .none
         self.tableView.rowHeight = self.frame.height*0.8/4
         self.addSubview(self.tableView)
+        
+        self.activityIndicatorView.center = CGPoint(x: self.frame.width/2, y: self.frame.height*0.6)
+        self.activityIndicatorView.tintColor = UIColor().mainColor()
+        self.addSubview(self.activityIndicatorView)
         
         self.tableView.delegate = self
         self.tableView.dataSource = self

@@ -12,7 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+    let tabBarController = UITabBarController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -38,13 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let favoritePlaceViewController = FavoritePlaceViewController()
         let favoritePlaceNavigationController = UINavigationController(rootViewController: favoritePlaceViewController)
         favoritePlaceNavigationController.title = "Избранные"
-        favoritePlaceNavigationController.tabBarItem.image = UIImage(named: "fav")?.withRenderingMode(.alwaysTemplate)
+        favoritePlaceNavigationController.tabBarItem.image = UIImage(named: "fav")?.withRenderingMode(.alwaysOriginal)
         favoritePlaceNavigationController.tabBarItem.selectedImage = UIImage(named: "favSelected")?.withRenderingMode(.alwaysOriginal)
         tabItems.append(favoritePlaceNavigationController)
         
         let orderViewController = OrderViewController()
         let orderNavigationController = UINavigationController(rootViewController: orderViewController)
-        orderNavigationController.title = "Мои Заказы"
+        orderNavigationController.title = "Заказы"
         orderNavigationController.navigationBar.isTranslucent = false
         orderNavigationController.tabBarItem.image = UIImage(named: "order")?.withRenderingMode(.alwaysOriginal)
         tabItems.append(orderNavigationController)
@@ -53,10 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let accountNavigationController = UINavigationController(rootViewController: accountViewController)
         accountNavigationController.title = "Аккаунт"
         accountNavigationController.navigationBar.isTranslucent = false
-        accountNavigationController.tabBarItem.image = UIImage(named: "order")?.withRenderingMode(.alwaysOriginal)
+        accountNavigationController.tabBarItem.image = UIImage(named: "user")?.withRenderingMode(.alwaysOriginal)
         tabItems.append(accountNavigationController)
-        
-        let tabBarController = UITabBarController()
+    
         tabBarController.viewControllers = tabItems
         tabBarController.tabBar.isTranslucent = false
         
@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             self.window?.rootViewController?.present(LoginViewController(), animated: false, completion: nil)
         }
-        
+    
         sleep(1)
         
         return true

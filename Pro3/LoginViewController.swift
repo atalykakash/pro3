@@ -45,17 +45,31 @@ class LoginViewController: UIViewController, DismissViewControllerDelegate, Pres
         let alertAction = UIAlertAction(title: "Отмена", style: .default, handler: nil)
         alertController.addAction(alertAction)
         
-        ApiHelper.loginUser(phoneNumber: String(phoneString), password: password) {
+        if phoneNumber.characters.count == 0 || password.characters.count == 0 {
             DispatchQueue.main.async {
-                self.loginView.progressView.isHidden = true
-                self.present(alertController, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    alertController.title = "Пожалуйста, заполните пустые поля"
+                    self.loginView.progressView.isHidden = true
+                    self.present(alertController, animated: true, completion: nil)
+                }
+            }
+        } else {
+            ApiHelper.loginUser(phoneNumber: String(phoneString), password: password) {
+                DispatchQueue.main.async {
+                    self.loginView.progressView.isHidden = true
+                    self.present(alertController, animated: true, completion: nil)
+                }
             }
         }
     }
     
+    
     func dismissViewController() {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            appDelegate.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.window?.rootViewController?.dismiss(animated: true, completion: nil)
+                appDelegate.tabBarController.selectedIndex = 0
+            }
         }
     }
 
@@ -65,7 +79,7 @@ class LoginViewController: UIViewController, DismissViewControllerDelegate, Pres
     
     func setup() {
         
-        self.loginView = LoginView(frame: UIScreen.main.bounds)
+        self.loginView.frame = UIScreen.main.bounds
         self.loginView.loginButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
         self.loginView.delegate = self
         self.view.addSubview(self.loginView)

@@ -17,14 +17,17 @@ protocol HideTimeslotDelegate: class {
 class TimeslotView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     weak var hideTimeslotDelegate: HideTimeslotDelegate?
+    
+    let screenBounds = UIScreen.main.bounds
 
     lazy var collectionView = UICollectionView()
     lazy var todayButton = UIButton()
+    lazy var dayView = UIView()
     lazy var tomorrowButton = UIButton()
     lazy var cancelButton = UIButton()
     lazy var submitButton = UIButton()
-    
-    let screenBounds = UIScreen.main.bounds
+    var progressView = ProgressIndicatorView()
+    var activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
     
     let weekDayArray = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
     
@@ -60,11 +63,17 @@ class TimeslotView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         let realm = try! Realm()
         let user = realm.objects(User.self)
         
+        self.activityIndicatorView.startAnimating()
+        
         ApiHelper.getTimetableCarWash(token: user[0].token, carwashId: carwash.id, dayOfWeek: self.dayOfWeek, interval: self.interval, completion: { (startTime, endTime) in
             
             self.timeIntervals = self.getIntervals(start: startTime, end: endTime)
             
             self.getBoxesCarwash(carwash: carwash, start: startTime, end: endTime)
+            
+            DispatchQueue.main.async {
+                self.activityIndicatorView.stopAnimating()
+            }
         })
     }
     
@@ -125,9 +134,15 @@ class TimeslotView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         if buttonTitle == "Сегодня" {
             self.todayOrTomorrow = "today"
             self.dayOfWeek = Date().dayOfWeek(day: "today")
+            UIView.animate(withDuration: 0.5, animations: { [unowned self] in
+                self.dayView.frame = CGRect(x: self.frame.width*0.42, y: self.frame.height*0.044, width: 8, height: 8)
+            })
         } else {
             self.todayOrTomorrow = "tomorrow"
             self.dayOfWeek = Date().dayOfWeek(day: "tomorrow")
+            UIView.animate(withDuration: 0.5, animations: { [unowned self] in
+                self.dayView.frame = CGRect(x: self.frame.width*0.9, y: self.frame.height*0.044, width: 8, height: 8)
+            })
         }
         
         guard let carwash = carwashValue else {
@@ -137,12 +152,18 @@ class TimeslotView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         let realm = try! Realm()
         let user = realm.objects(User.self)
         
+        self.activityIndicatorView.startAnimating()
+        
         ApiHelper.getTimetableCarWash(token: user[0].token, carwashId: carwash.id, dayOfWeek: self.dayOfWeek, interval: self.interval, completion: { (startTime, endTime) in
             
             DispatchQueue.main.async {
                 
                 self.timeIntervals = self.getIntervals(start: startTime, end: endTime)
                 self.getBoxesCarwash(carwash: carwash, start: startTime, end: endTime)
+                
+                DispatchQueue.main.async {
+                    self.activityIndicatorView.stopAnimating()
+                }
             }
         })
     }
@@ -155,10 +176,17 @@ class TimeslotView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         self.index = nil
         
+        self.dayView.frame = CGRect(x: self.frame.width*0.42, y: self.frame.height*0.044, width: 8, height: 8)
+        
+        self.progressView.isHidden = true
+        
         self.hideTimeslotDelegate?.hideTimeslotView()
     }
     
     func submitButtonPressed() {
+        
+        self.progressView.messageLabel.text = "Обработка заказа"
+        self.progressView.isHidden = false
         
         guard let indexRow = index else {
             return
@@ -176,8 +204,18 @@ class TimeslotView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         for box in self.boxArray {
             if box.timeIntervals[indexRow].isAvailable {
-                ApiHelper.bookTimeSlot(token: user[0].token, boxId: box.id, priceId: priceId, startTime: startTime, endTime: endTime)
-                print("ordered")
+                ApiHelper.bookTimeSlot(token: user[0].token, boxId: box.id, priceId: priceId, startTime: startTime, endTime: endTime, errorCompletion: { [unowned self] in
+                    
+                    self.progressView.messageLabel.text = "Произошла ошибка"
+                    
+                }) { [unowned self] in
+                    
+                    DispatchQueue.main.async {
+                        self.hideTimeslot()
+                        self.progressView.isHidden = true
+                    }
+                    
+                }
                 break
             }
         }
@@ -192,7 +230,7 @@ class TimeslotView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         self.collectionView.reloadData()
         
-        hideTimeslot()
+        self.dayView.frame = CGRect(x: self.frame.width*0.42, y: self.frame.height*0.044, width: 8, height: 8)
     }
     
     func setup() {
@@ -200,6 +238,8 @@ class TimeslotView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         self.backgroundColor = UIColor().lightGrayBackgroundColor()
         
         let layout = UICollectionViewFlowLayout()
+        
+        self.clipsToBounds = true
         
         self.collectionView = UICollectionView(frame: CGRect(x: 0, y: frame.height*0.13, width: frame.width, height: frame.height*0.74), collectionViewLayout: layout)
         self.collectionView.register(SlotCollectionViewCell.self, forCellWithReuseIdentifier: "SlotCell")
@@ -211,31 +251,51 @@ class TimeslotView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         self.todayButton = UIButton(frame: CGRect(x: 0, y: 0, width: frame.width*0.5, height: frame.height*0.13))
         self.todayButton.setTitle("Сегодня", for: .normal)
-        self.todayButton.setTitleColor(UIColor.black, for: .normal)
+        self.todayButton.setTitleColor(UIColor.white, for: .normal)
+        self.todayButton.backgroundColor = UIColor().mainColor()
         self.todayButton.addTarget(self, action: #selector(dayOfWeekPressed(sender:)), for: .touchUpInside)
         self.todayButton.titleLabel?.font = UIFont().risingSun()
         self.addSubview(self.todayButton)
         
         self.tomorrowButton = UIButton(frame: CGRect(x: frame.width*0.5, y: 0, width: frame.width*0.5, height: frame.height*0.13))
         self.tomorrowButton.setTitle("Завтра", for: .normal)
-        self.tomorrowButton.setTitleColor(UIColor.black, for: .normal)
+        self.tomorrowButton.setTitleColor(UIColor.white, for: .normal)
+        self.tomorrowButton.backgroundColor = UIColor().mainColor()
         self.tomorrowButton.addTarget(self, action: #selector(dayOfWeekPressed(sender:)), for: .touchUpInside)
         self.tomorrowButton.titleLabel?.font = UIFont().risingSun()
         self.addSubview(self.tomorrowButton)
         
-        self.cancelButton = UIButton(frame: CGRect(x: frame.width*0.05, y: frame.height*0.87, width: frame.width*0.4, height: frame.height*0.12))
+        self.dayView = UIView(frame: CGRect(x: frame.width*0.42, y: frame.height*0.044, width: 8, height: 8))
+        self.dayView.backgroundColor = UIColor.white
+        self.dayView.layer.cornerRadius = 4
+        self.addSubview(self.dayView)
+        
+        self.cancelButton = UIButton(frame: CGRect(x: 0, y: frame.height*0.87, width: frame.width*0.5, height: frame.height*0.12))
         self.cancelButton.setTitle("Отмена", for: .normal)
-        self.cancelButton.setTitleColor(UIColor.black, for: .normal)
+        self.cancelButton.setTitleColor(UIColor.white, for: .normal)
+        self.cancelButton.backgroundColor = UIColor().mainColor()
         self.cancelButton.addTarget(self, action: #selector(hideTimeslot), for: .touchUpInside)
         self.cancelButton.titleLabel?.font = UIFont().risingSun()
         self.addSubview(self.cancelButton)
         
-        self.submitButton = UIButton(frame: CGRect(x: frame.width*0.5, y: frame.height*0.87, width: frame.width*0.45, height: frame.height*0.12))
+        self.submitButton = UIButton(frame: CGRect(x: frame.width*0.5, y: frame.height*0.87, width: frame.width*0.5, height: frame.height*0.12))
         self.submitButton.setTitle("Потвердить", for: .normal)
-        self.submitButton.setTitleColor(UIColor.black, for: .normal)
+        self.submitButton.setTitleColor(UIColor.white, for: .normal)
+        self.submitButton.backgroundColor = UIColor().mainColor()
         self.submitButton.addTarget(self, action: #selector(submitButtonPressed), for: .touchUpInside)
         self.submitButton.titleLabel?.font = UIFont().risingSun()
         self.addSubview(self.submitButton)
+        
+        self.activityIndicatorView.center = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
+        self.activityIndicatorView.tintColor = UIColor().mainColor()
+        self.addSubview(self.activityIndicatorView)
+        
+        self.progressView = ProgressIndicatorView(frame: CGRect(x: self.screenBounds.width*0.2, y: screenBounds.height*0.2, width: screenBounds.width*0.3, height: screenBounds.width*0.32))
+        self.progressView.layer.cornerRadius = 5
+        self.progressView.messageLabel.text = "Загружаю данные"
+        self.progressView.messageLabel.font = UIFont().risingSunSmall()
+        self.progressView.isHidden = true
+        self.addSubview(self.progressView)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -273,8 +333,7 @@ class TimeslotView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         if selectedTimeCell == indexPath.row {
             if self.timeIntervals[selectedTimeCell].isAvailable {
-                cell.backgroundColor = UIColor().mainColor()
-                cell.timeLabel.textColor = UIColor.white
+                cell.backgroundColor = UIColor().lightGrayBackgroundColor()
             }
         }
         

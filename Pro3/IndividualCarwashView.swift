@@ -17,13 +17,16 @@ class IndividualCarwashView: UIView, UICollectionViewDelegate, UICollectionViewD
     
     let screenBounds = UIScreen.main.bounds
     
+    lazy var scrollView = UIScrollView()
     lazy var chooseCarLabel = UILabel()
     lazy var chooseServiceLabel = UILabel()
     lazy var collectionView = UICollectionView()
     lazy var tableView = UITableView()
+    lazy var priceProLabel = UILabel()
     lazy var priceLabel = UILabel()
     lazy var timeButton = UIButton()
-    lazy var serviceLineView = UIView()
+    lazy var contactLabel = UILabel()
+    var progressView = ProgressIndicatorView()
     
     let blurEffect = UIBlurEffect(style: .light)
     var visualEffectView = UIVisualEffectView()
@@ -76,6 +79,8 @@ class IndividualCarwashView: UIView, UICollectionViewDelegate, UICollectionViewD
                 self.collectionView.reloadData()
                 self.selectedCar = self.carArray[0]
                 self.getServicesForCarType(car: self.selectedCar)
+                self.progressView.isHidden = true
+                self.scrollView.isHidden = false
             }
         }
         
@@ -133,11 +138,16 @@ class IndividualCarwashView: UIView, UICollectionViewDelegate, UICollectionViewD
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
+        self.scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height*2))
+        self.scrollView.contentOffset.x = 0
+        self.scrollView.contentOffset.y = 0
+        self.addSubview(self.scrollView)
+        
         self.chooseCarLabel = UILabel(frame: CGRect(x: 10, y: 0, width: frame.width-20, height: frame.height*0.05))
         self.chooseCarLabel.text = "Автомобиль"
-        self.chooseCarLabel.textAlignment = .center
-        self.chooseCarLabel.font = UIFont(name: "Helvetica-Light", size: frame.width*0.05)
-        self.addSubview(self.chooseCarLabel)
+        self.chooseCarLabel.textAlignment = .left
+        self.chooseCarLabel.font = UIFont().risingSunBold()
+        self.scrollView.addSubview(self.chooseCarLabel)
         
         self.collectionView = UICollectionView(frame:  CGRect(x: 10, y: frame.height*0.05, width: self.screenBounds.width-20, height: self.screenBounds.height*0.29), collectionViewLayout: layout)
         self.collectionView.register(CarTypeCollectionViewCell.self, forCellWithReuseIdentifier: "CarTypeCell")
@@ -145,63 +155,90 @@ class IndividualCarwashView: UIView, UICollectionViewDelegate, UICollectionViewD
         self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.addSubview(self.collectionView)
+        self.scrollView.addSubview(self.collectionView)
         
-        self.chooseServiceLabel = UILabel(frame: CGRect(x: 10, y: self.screenBounds.height*0.35, width: frame.width-20, height: frame.height*0.05))
+        self.chooseServiceLabel = UILabel(frame: CGRect(x: 10, y: self.screenBounds.height*0.343, width: frame.width-20, height: frame.height*0.05))
         self.chooseServiceLabel.text = "Сервис"
-        self.chooseServiceLabel.font = UIFont(name: "RisingSun-Light", size: frame.width*0.05)
+        self.chooseServiceLabel.font = UIFont().risingSunBold()
         self.chooseServiceLabel.textAlignment = .left
-        self.chooseServiceLabel.textColor = UIColor().mainColor()
-        self.addSubview(self.chooseServiceLabel)
+        self.scrollView.addSubview(self.chooseServiceLabel)
         
-        self.tableView = UITableView(frame: CGRect(x: 10, y: self.screenBounds.height*0.35, width: self.screenBounds.width-20, height: self.screenBounds.height*0.25), style: .plain)
+        self.tableView = UITableView(frame: CGRect(x: 10, y: self.screenBounds.height*0.3, width: self.screenBounds.width-20, height: self.screenBounds.height*0.25), style: .plain)
         self.tableView.register(ServiceTableViewCell.self, forCellReuseIdentifier: "ServiceCell")
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.separatorStyle = .none
         self.tableView.rowHeight = self.screenBounds.height*0.06
-        self.addSubview(self.tableView)
+        self.scrollView.addSubview(self.tableView)
         
-        self.serviceLineView = UIView(frame: CGRect(x: 10, y: self.screenBounds.height*0.41, width: self.screenBounds.width-20, height: 0.5))
-        self.serviceLineView.backgroundColor = UIColor().mainColor()
-        self.addSubview(self.serviceLineView)
+        self.priceProLabel.text = "Итого"
+        self.priceProLabel.textAlignment = .center
+        self.priceProLabel.font = UIFont().risingSun()
+        self.priceProLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.scrollView.addSubview(self.priceProLabel)
         
-        self.priceLabel.text = "Price"
-        self.priceLabel.backgroundColor = UIColor.red
+        self.priceLabel.text = "2000 тг"
+        self.priceLabel.textAlignment = .center
+        self.priceLabel.font = UIFont().risingSunRegularBig()
         self.priceLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.priceLabel)
+        self.scrollView.addSubview(self.priceLabel)
         
-        self.timeButton.backgroundColor = UIColor.blue
+        self.timeButton.backgroundColor = UIColor().mainColor()
+        self.timeButton.setTitle("Выбрать время", for: .normal)
+        self.timeButton.setTitleColor(UIColor.white, for: .normal)
+        self.timeButton.layer.cornerRadius = 20
+        self.timeButton.titleLabel?.font = UIFont().risingSun()
         self.timeButton.translatesAutoresizingMaskIntoConstraints = false
         self.timeButton.addTarget(self, action: #selector(animateTimeslotView), for: .touchUpInside)
-        self.addSubview(self.timeButton)
+        self.scrollView.addSubview(self.timeButton)
+        
+        self.progressView = ProgressIndicatorView(frame: CGRect(x: self.screenBounds.width*0.35, y: self.screenBounds.height*0.31, width: self.screenBounds.width*0.3, height: self.screenBounds.height*0.18))
+        self.progressView.layer.cornerRadius = 5
+        self.progressView.messageLabel.text = "Загружаю данные"
+        self.progressView.messageLabel.font = UIFont().risingSunSmall()
+        self.progressView.isHidden = false
+        self.addSubview(self.progressView)
         
         self.visualEffectView = UIVisualEffectView(effect: blurEffect)
         self.visualEffectView.frame = self.screenBounds
         self.visualEffectView.isHidden = true
-        self.addSubview(self.visualEffectView)
+        self.scrollView.addSubview(self.visualEffectView)
         
         self.timeslotView = TimeslotView(frame: CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*1.1, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.6))
         self.timeslotView.layer.cornerRadius = 10
         self.timeslotView.hideTimeslotDelegate = self
-        self.addSubview(self.timeslotView)
+        self.scrollView.addSubview(self.timeslotView)
+        
+        self.scrollView.isHidden = true
+        
+        //self.scrollView.contentSize = CGSize(width: frame.width, height: )
     }
     
     func updateViewContraints() {
         
+        self.addConstraints([NSLayoutConstraint(item: self.priceProLabel, attribute: .top, relatedBy: .equal, toItem: self.tableView, attribute: .bottom, multiplier: 1, constant: 10)])
+        self.addConstraints([NSLayoutConstraint(item: self.priceProLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.screenBounds.width*0.15)])
+        self.addConstraints([NSLayoutConstraint(item: self.priceProLabel, attribute: .left, relatedBy: .equal, toItem: self.tableView, attribute: .left, multiplier: 1, constant: 5)])
+        self.addConstraints([NSLayoutConstraint(item: self.priceProLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.screenBounds.height*0.07)])
+        
         self.addConstraints([NSLayoutConstraint(item: self.priceLabel, attribute: .top, relatedBy: .equal, toItem: self.tableView, attribute: .bottom, multiplier: 1, constant: 10)])
-        self.addConstraints([NSLayoutConstraint(item: self.priceLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.screenBounds.width*0.3)])
-        self.addConstraints([NSLayoutConstraint(item: self.priceLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.screenBounds.height*0.1)])
+        self.addConstraints([NSLayoutConstraint(item: self.priceLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.screenBounds.width*0.25)])
+        self.addConstraints([NSLayoutConstraint(item: self.priceLabel, attribute: .left, relatedBy: .equal, toItem: self.priceProLabel, attribute: .right, multiplier: 1, constant: 0)])
+        self.addConstraints([NSLayoutConstraint(item: self.priceLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.screenBounds.height*0.07)])
         
         self.addConstraints([NSLayoutConstraint(item: self.timeButton, attribute: .top, relatedBy: .equal, toItem: self.tableView, attribute: .bottom, multiplier: 1, constant: 10)])
-        self.addConstraints([NSLayoutConstraint(item: self.timeButton, attribute: .left, relatedBy: .equal, toItem: self.priceLabel, attribute: .right, multiplier: 1, constant: 10)])
-        self.addConstraints([NSLayoutConstraint(item: self.timeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.screenBounds.width*0.3)])
-        self.addConstraints([NSLayoutConstraint(item: self.timeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.screenBounds.height*0.1)])
+        self.addConstraints([NSLayoutConstraint(item: self.timeButton, attribute: .left, relatedBy: .equal, toItem: self.priceLabel, attribute: .right, multiplier: 1, constant: 5)])
+        self.addConstraints([NSLayoutConstraint(item: self.timeButton, attribute: .centerY, relatedBy: .equal, toItem: self.priceLabel, attribute: .centerY, multiplier: 1, constant: 0)])
+        self.addConstraints([NSLayoutConstraint(item: self.timeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: self.screenBounds.width*0.5)])
+        self.addConstraints([NSLayoutConstraint(item: self.timeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40)])
     }
     
     func animateTimeslotView() {
-        print("\(self.priceId) is my id")
         self.timeslotView.priceId = self.priceId
+        self.timeslotView.dayOfWeek = Date().dayOfWeek(day: "today")
+        if let carwash = carwashValue {
+            self.timeslotView.carwashValue = carwash
+        }
         if self.timeslotView.frame.origin.y == self.screenBounds.height*0.1 {
             UIView.animate(withDuration: 0.5, animations: {
                 self.timeslotView.frame = CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*1.1, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.6)
@@ -238,9 +275,17 @@ class IndividualCarwashView: UIView, UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CarTypeCell", for: indexPath) as! CarTypeCollectionViewCell
         cell.carLabel.text = self.carArray[indexPath.row].name
         cell.blackView.isHidden = true
+        cell.checkImageView.isHidden = true
         if selectedCell == indexPath.row {
             cell.blackView.isHidden = false
+            cell.checkImageView.isHidden = false
         }
+        if(selectedCell == -1 && indexPath.row == 0) {
+            self.selectedCar = self.carArray[indexPath.row]
+            cell.blackView.isHidden = false
+            cell.checkImageView.isHidden = false
+        }
+        
         return cell
     }
     
@@ -251,9 +296,8 @@ class IndividualCarwashView: UIView, UICollectionViewDelegate, UICollectionViewD
         
         for carType in carTypeArray {
             if carType.id == self.selectedCar.id && carType.serviceId == self.selectedService.id {
-                self.priceLabel.text = carType.priceString
+                self.priceLabel.text = "\(carType.priceString) тг"
                 self.priceId = carType.priceId
-                print("\(self.priceId) is collect")
             }
         }
         
@@ -268,18 +312,28 @@ class IndividualCarwashView: UIView, UICollectionViewDelegate, UICollectionViewD
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ServiceCell", for: indexPath) as! ServiceTableViewCell
+        
         cell.serviceLabel.text = self.serviceArray[indexPath.row].name
         cell.picImageView.isHidden = true
         if selectedServiceCell == indexPath.row {
             cell.picImageView.isHidden = false
-            print("\(self.priceId) is cell row")
         }
+        
+        if(selectedCell == -1) {
+            self.selectedCar = self.carArray[0]
+        }
+        
         if (selectedServiceCell == -1 && self.serviceArray[indexPath.row].name == "Кузов + Салон") {
             cell.picImageView.isHidden = false
-            self.priceId = self.serviceArray[indexPath.row].priceId
-            //print("\(self.serviceArray[indexPath.row].priceId) is cell row")
+            
+            for carType in carTypeArray {
+                if carType.id == self.selectedCar.id && carType.serviceId == self.serviceArray[indexPath.row].id {
+                    self.priceLabel.text = "\(carType.priceString) тг"
+                    self.priceId = carType.priceId
+                }
+            }
         }
-        print("\(self.serviceArray[indexPath.row].priceId) is cell row")
+        
         return cell
     }
     
@@ -290,9 +344,8 @@ class IndividualCarwashView: UIView, UICollectionViewDelegate, UICollectionViewD
         
         for carType in carTypeArray {
             if carType.id == self.selectedCar.id && carType.serviceId == self.selectedService.id {
-                self.priceLabel.text = carType.priceString
+                self.priceLabel.text = "\(carType.priceString) тг"
                 self.priceId = carType.priceId
-                print("\(self.priceId) is price id")
             }
         }
         

@@ -18,9 +18,9 @@ class LoginView: UIView, UITextFieldDelegate {
     
     var welcomeLabel = UILabel()
     var phoneTextfield = ProTextField()
-    var phoneLineView = UIView()
+    var phoneLabel = UILabel()
     var passwordTextfield = ProTextField()
-    var passwordLineView = UIView()
+    var passwordLabel = UILabel()
     var loginButton = UIButton()
     var signUpButton = UIButton()
     var formattedString = NSMutableString()
@@ -32,7 +32,7 @@ class LoginView: UIView, UITextFieldDelegate {
         super.init(frame: frame)
         
         self.setup()
-        self.addViewConstraints()
+        self.updateViewConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -105,11 +105,20 @@ class LoginView: UIView, UITextFieldDelegate {
         
         self.backgroundColor = UIColor.white
         
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        self.addGestureRecognizer(tapRecognizer)
+        
         self.welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         self.welcomeLabel.text = "Добро пожаловать"
         self.welcomeLabel.numberOfLines = 0
         self.welcomeLabel.font = UIFont(name: "RisingSun-Light", size: self.screenBounds.width*0.13)
         self.addSubview(self.welcomeLabel)
+        
+        self.phoneLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.phoneLabel.text = "Номер телефона"
+        self.phoneLabel.font = UIFont().risingSunSmall()
+        self.phoneLabel.textColor = UIColor().mainColor()
+        self.addSubview(phoneLabel)
         
         self.phoneTextfield.backgroundColor = UIColor.white
         self.phoneTextfield.translatesAutoresizingMaskIntoConstraints = false
@@ -118,25 +127,23 @@ class LoginView: UIView, UITextFieldDelegate {
         self.phoneTextfield.font = UIFont().risingSunRegularBig()
         self.addSubview(self.phoneTextfield)
         
+        self.passwordLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.passwordLabel.text = "Пароль"
+        self.passwordLabel.font = UIFont().risingSunSmall()
+        self.passwordLabel.textColor = UIColor().mainColor()
+        self.addSubview(passwordLabel)
+        
         self.passwordTextfield.backgroundColor = UIColor.white
         self.passwordTextfield.translatesAutoresizingMaskIntoConstraints = false
         self.passwordTextfield.placeholder = "******"
         self.passwordTextfield.font = UIFont().risingSunRegularBig()
         self.addSubview(self.passwordTextfield)
         
-        self.phoneLineView.translatesAutoresizingMaskIntoConstraints = false
-        self.phoneLineView.backgroundColor = UIColor.black
-        self.addSubview(self.phoneLineView)
-        
-        self.passwordLineView.translatesAutoresizingMaskIntoConstraints = false
-        self.passwordLineView.backgroundColor = UIColor.black
-        self.addSubview(self.passwordLineView)
-        
         self.loginButton.backgroundColor = UIColor().mainColor()
         self.loginButton.setTitle("Войти", for: .normal)
         self.loginButton.setTitleColor(UIColor.white, for: .normal)
         self.loginButton.translatesAutoresizingMaskIntoConstraints = false
-        self.loginButton.layer.cornerRadius = self.screenBounds.height*0.035
+        self.loginButton.layer.cornerRadius = 20
         self.loginButton.titleLabel?.font = UIFont().risingSun()
         self.addSubview(self.loginButton)
         
@@ -145,7 +152,7 @@ class LoginView: UIView, UITextFieldDelegate {
         self.signUpButton.setTitleColor(UIColor.black, for: .normal)
         self.signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
         self.signUpButton.translatesAutoresizingMaskIntoConstraints = false
-        self.signUpButton.layer.cornerRadius = self.screenBounds.height*0.035
+        self.signUpButton.layer.cornerRadius = 20
         self.signUpButton.titleLabel?.font = UIFont().risingSun()
         self.addSubview(self.signUpButton)
         
@@ -157,37 +164,42 @@ class LoginView: UIView, UITextFieldDelegate {
         self.addSubview(self.progressView)
     }
     
-    func addViewConstraints() {
+    func hideKeyboard() {
         
-        let views = ["phoneTextfield"    : phoneTextfield,
-                     "passwordTextfield" : passwordTextfield,
-                     "welcomeLabel"      : welcomeLabel] as [String : Any]
+        self.phoneTextfield.resignFirstResponder()
+        self.passwordTextfield.resignFirstResponder()
+    }
+    
+    func updateViewConstraints() {
         
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-\(screenBounds.width*0.1)-[welcomeLabel]-\(screenBounds.width*0.1)-|", options: NSLayoutFormatOptions(), metrics: nil, views: views))
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-\(screenBounds.height*0.15)-[welcomeLabel(\(screenBounds.height*0.2))]", options: NSLayoutFormatOptions(), metrics: nil, views: views))
+        self.addConstraints([NSLayoutConstraint(item: self.welcomeLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenBounds.width*0.8)])
+        self.addConstraints([NSLayoutConstraint(item: self.welcomeLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenBounds.height*0.2)])
+        self.addConstraints([NSLayoutConstraint(item: self.welcomeLabel, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: self.screenBounds.height*0.1)])
+        self.addConstraints([NSLayoutConstraint(item: self.welcomeLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0)])
         
-        self.addConstraints([NSLayoutConstraint(item: self.phoneTextfield, attribute: .top, relatedBy: .equal, toItem: self.welcomeLabel, attribute: .bottom, multiplier: 1, constant: 20)])
+        self.addConstraints([NSLayoutConstraint(item: self.phoneLabel, attribute: .width, relatedBy: .equal, toItem: self.welcomeLabel, attribute: .width, multiplier: 1.0, constant: 1.0)])
+        self.addConstraints([NSLayoutConstraint(item: self.phoneLabel, attribute: .top, relatedBy: .equal, toItem: self.welcomeLabel, attribute: .bottom, multiplier: 1.0, constant: self.screenBounds.height*0.04)])
+        self.addConstraints([NSLayoutConstraint(item: self.phoneLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenBounds.height*0.03)])
+        self.addConstraints([NSLayoutConstraint(item: self.phoneLabel, attribute: .left, relatedBy: .equal, toItem: self.welcomeLabel, attribute: .left, multiplier: 1.0, constant: 1.0)])
+        
+        self.addConstraints([NSLayoutConstraint(item: self.phoneTextfield, attribute: .top, relatedBy: .equal, toItem: self.phoneLabel, attribute: .bottom, multiplier: 1, constant: 0)])
         self.addConstraints([NSLayoutConstraint(item: self.phoneTextfield, attribute: .width, relatedBy: .equal, toItem: self.welcomeLabel, attribute: .width, multiplier: 1, constant: 0.7)])
         self.addConstraints([NSLayoutConstraint(item: self.phoneTextfield, attribute: .left, relatedBy: .equal, toItem: self.welcomeLabel, attribute: .left, multiplier: 1, constant: 0)])
         self.addConstraints([NSLayoutConstraint(item: self.phoneTextfield, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: screenBounds.height*0.07)])
         
-        self.addConstraints([NSLayoutConstraint(item: self.phoneLineView, attribute: .top, relatedBy: .equal, toItem: self.phoneTextfield, attribute: .bottom, multiplier: 1, constant: 5)])
-        self.addConstraints([NSLayoutConstraint(item: self.phoneLineView, attribute: .width, relatedBy: .equal, toItem: self.phoneTextfield, attribute: .width, multiplier: 1, constant: 1)])
-        self.addConstraints([NSLayoutConstraint(item: self.phoneLineView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 1)])
-        self.addConstraints([NSLayoutConstraint(item: self.phoneLineView, attribute: .left, relatedBy: .equal, toItem: self.phoneTextfield, attribute: .left, multiplier: 1, constant: 0)])
+        self.addConstraints([NSLayoutConstraint(item: self.passwordLabel, attribute: .width, relatedBy: .equal, toItem: self.welcomeLabel, attribute: .width, multiplier: 1.0, constant: 1.0)])
+        self.addConstraints([NSLayoutConstraint(item: self.passwordLabel, attribute: .top, relatedBy: .equal, toItem: self.phoneTextfield, attribute: .bottom, multiplier: 1.0, constant: 1.0)])
+        self.addConstraints([NSLayoutConstraint(item: self.passwordLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenBounds.height*0.03)])
+        self.addConstraints([NSLayoutConstraint(item: self.passwordLabel, attribute: .left, relatedBy: .equal, toItem: self.welcomeLabel, attribute: .left, multiplier: 1.0, constant: 1.0)])
         
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-\(screenBounds.width*0.1)-[passwordTextfield]-\(screenBounds.width*0.1)-|", options: NSLayoutFormatOptions(), metrics: nil, views: views))
-        self.addConstraints([NSLayoutConstraint(item: self.passwordTextfield, attribute: .top, relatedBy: .equal, toItem: self.phoneLineView, attribute: .bottom, multiplier: 1.0, constant: 10.0)])
+        self.addConstraints([NSLayoutConstraint(item: self.passwordTextfield, attribute: .width, relatedBy: .equal, toItem: self.welcomeLabel, attribute: .width, multiplier: 1.0, constant: 1.0)])
+        self.addConstraints([NSLayoutConstraint(item: self.passwordTextfield, attribute: .left, relatedBy: .equal, toItem: self.welcomeLabel, attribute: .left, multiplier: 1.0, constant: 0)])
+        self.addConstraints([NSLayoutConstraint(item: self.passwordTextfield, attribute: .top, relatedBy: .equal, toItem: self.passwordLabel, attribute: .bottom, multiplier: 1.0, constant: 10.0)])
         self.passwordTextfield.addConstraints([NSLayoutConstraint(item: self.passwordTextfield, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenBounds.height*0.07)])
         
-        self.addConstraints([NSLayoutConstraint(item: self.passwordLineView, attribute: .top, relatedBy: .equal, toItem: self.passwordTextfield, attribute: .bottom, multiplier: 1, constant: 5)])
-        self.addConstraints([NSLayoutConstraint(item: self.passwordLineView, attribute: .width, relatedBy: .equal, toItem: self.passwordTextfield, attribute: .width, multiplier: 1, constant: 1)])
-        self.addConstraints([NSLayoutConstraint(item: self.passwordLineView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 1)])
-        self.addConstraints([NSLayoutConstraint(item: self.passwordLineView, attribute: .left, relatedBy: .equal, toItem: self.passwordTextfield, attribute: .left, multiplier: 1, constant: 0)])
-        
-        self.addConstraints([NSLayoutConstraint(item: self.loginButton, attribute: .top, relatedBy: .equal, toItem: self.passwordLineView, attribute: .bottom, multiplier: 1, constant: self.screenBounds.height*0.07)])
-        self.addConstraints([NSLayoutConstraint(item: self.loginButton, attribute: .width, relatedBy: .equal, toItem: self.passwordLineView, attribute: .width, multiplier: 1, constant: 0)])
-        self.addConstraints([NSLayoutConstraint(item: self.loginButton, attribute: .left, relatedBy: .equal, toItem: self.passwordLineView, attribute: .left, multiplier: 1, constant: 0)])
+        self.addConstraints([NSLayoutConstraint(item: self.loginButton, attribute: .top, relatedBy: .equal, toItem: self.passwordTextfield, attribute: .bottom, multiplier: 1, constant: self.screenBounds.height*0.07)])
+        self.addConstraints([NSLayoutConstraint(item: self.loginButton, attribute: .width, relatedBy: .equal, toItem: self.passwordTextfield, attribute: .width, multiplier: 1, constant: 0)])
+        self.addConstraints([NSLayoutConstraint(item: self.loginButton, attribute: .left, relatedBy: .equal, toItem: self.passwordTextfield, attribute: .left, multiplier: 1, constant: 0)])
         self.addConstraints([NSLayoutConstraint(item: self.loginButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40)])
         
         self.addConstraints([NSLayoutConstraint(item: self.signUpButton, attribute: .top, relatedBy: .equal, toItem: self.loginButton, attribute: .bottom, multiplier: 1, constant: 15)])
@@ -195,5 +207,4 @@ class LoginView: UIView, UITextFieldDelegate {
         self.addConstraints([NSLayoutConstraint(item: self.signUpButton, attribute: .left, relatedBy: .equal, toItem: self.loginButton, attribute: .left, multiplier: 1, constant: 0)])
         self.addConstraints([NSLayoutConstraint(item: self.signUpButton, attribute: .height, relatedBy: .equal, toItem: self.loginButton, attribute: .height, multiplier: 1, constant: 1)])
     }
-
 }

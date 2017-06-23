@@ -19,7 +19,7 @@ class ApiHelper {
     
     static weak var delegate: DismissViewControllerDelegate?
     
-    static func registerUser(phoneNumber: String, name: String, password: String, confirmPassword: String, cityId: String, carId: String, completion: @escaping () -> ()) {
+    static func registerUser(phoneNumber: String, name: String, password: String, confirmPassword: String, cityId: String, carId: String, completion: @escaping () -> (), dismissController: @escaping () -> ()) {
         
         let json = ["user": [
         "phone_number" : phoneNumber,
@@ -49,6 +49,12 @@ class ApiHelper {
         
         let task = sesssion.dataTask(with: request as URLRequest) { (data, response, error) in
             
+            let statusCode = (response as! HTTPURLResponse).statusCode
+  
+            if statusCode>=200 && statusCode<=299 {
+                dismissController()
+            }
+            
             guard error == nil else {
                 return
             }
@@ -60,11 +66,11 @@ class ApiHelper {
             do {
                 
                 if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String : Any] {
+                    
                     print(json)
+                    
+                    completion()
                 }
-                
-                self.delegate?.dismissViewController()
-                
             } catch let error {
                 print(error.localizedDescription)
             }
@@ -556,7 +562,7 @@ class ApiHelper {
     }
 
     
-    static func bookTimeSlot(token: String, boxId: String, priceId: String, startTime: String, endTime: String) {
+    static func bookTimeSlot(token: String, boxId: String, priceId: String, startTime: String, endTime: String, errorCompletion: @escaping () -> (), completion: @escaping () -> ()) {
         
         let json : [String : Any] = ["order": [
             "box_id" : boxId,
@@ -586,6 +592,14 @@ class ApiHelper {
         
         let task = sesssion.dataTask(with: request as URLRequest) { (data, response, error) in
             
+            if let urlResponse = response as? HTTPURLResponse {
+                if urlResponse.statusCode >= 200 && urlResponse.statusCode <= 299 {
+                    errorCompletion()
+                }
+            } else {
+                errorCompletion()
+            }
+            
             guard error == nil else {
                 return
             }
@@ -597,7 +611,8 @@ class ApiHelper {
             do {
                 
                 let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) 
-                print("\(json) is json")
+                
+                completion()
                 
             } catch let error {
                 print(error.localizedDescription)
@@ -782,6 +797,11 @@ class ApiHelper {
                         return
                     }
                     
+                    guard let endTime = item["end_time"] as? String else {
+                        print("Start time not found")
+                        return
+                    }
+                    
                     let order = Order()
                     order.id = String(id)
                     order.carwashName = carwashName
@@ -790,6 +810,7 @@ class ApiHelper {
                     order.price = String(price)
                     order.status = String(status)
                     order.startTime = startTime
+                    order.endTime = endTime
                     orderArray.append(order)
                 }
                 
@@ -846,6 +867,132 @@ class ApiHelper {
                 print(error.localizedDescription)
             }
         }
+        task.resume()
+    }
+    
+    static func getIndividualOrder(token: String, orderId: String, completion: @escaping (_ carwash: Order) -> ()) {
+        
+        print("This is order id : \(orderId)")
+        
+        guard let url = URL(string: "https://propropro.herokuapp.com/api/v1/orders/\(orderId)") else {
+            return
+        }
+        
+        let session = URLSession.shared
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        request.addValue("Token token=\"\(token)\"", forHTTPHeaderField: "Authorization")
+        
+        print(#function)
+        
+        let task = session.dataTask(with: request) { (data, response, error) in
+            
+            guard error == nil else {
+                print("Error found")
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                guard let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String : Any] else {
+                    return
+                }
+                
+                guard let id = json["id"] as? Int else {
+                    print("Id not found")
+                    return
+                }
+                
+                guard let carwashName = json["carwash_name"] as? String else {
+                    print("Carwash name not found")
+                    return
+                }
+                
+                guard let serviceName = json["service_name"] as? String else {
+                    print("Service name not found")
+                    return
+                }
+                
+                guard let carType = json["car_type"] as? String else {
+                    print("Car type not found")
+                    return
+                }
+                
+                guard let price = json["price"] as? Int else {
+                    print("Price not found")
+                    return
+                }
+                
+                guard let address = json["carwash_address"] as? String else {
+                    print("Carwash address not found")
+                    return
+                }
+                
+                guard let status = json["status"] as? Int else {
+                    print("Status not found")
+                    return
+                }
+                
+                guard let startTime = json["start_time"] as? String else {
+                    print("Start time not found")
+                    return
+                }
+                
+                guard let endTime = json["end_time"] as? String else {
+                    print("End time not found")
+                    return
+                }
+                
+                let order = Order()
+                order.id = String(id)
+                order.carwashName = carwashName
+                order.serviceName = serviceName
+                order.carType = carType
+                order.price = String(price)
+                order.status = String(status)
+                order.startTime = startTime
+                order.endTime = endTime
+                order.address = address
+                
+                completion(order)
+                
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        task.resume()
+    }
+    
+    static func deleteOrder(token: String, orderId: String, completion: @escaping () -> ()) {
+        
+        guard let url = URL(string: "https://propropro.herokuapp.com/api/v1/orders/\(orderId)") else {
+            print("URL not found")
+            return
+        }
+        
+        let sesssion = URLSession.shared
+        
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        request.addValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        request.addValue("Token token=\"\(token)\"", forHTTPHeaderField: "Authorization")
+        
+        let task = sesssion.dataTask(with: request as URLRequest) { (data, response, error) in
+            
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            
+            if statusCode >= 200 && statusCode <= 299 {
+                print("cancelled")
+                completion()
+            }
+        }
+        
         task.resume()
     }
     

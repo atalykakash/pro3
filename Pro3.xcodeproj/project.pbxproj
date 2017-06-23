@@ -40,6 +40,8 @@
 		84D5AC431EBCFC1C00B78791 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D5AC421EBCFC1C00B78791 /* LoginView.swift */; };
 		84D5AC451EBD07E900B78791 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D5AC441EBD07E900B78791 /* LoginViewController.swift */; };
 		84E0D0AF1ECC004E00E06D2D /* BoxTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E0D0AE1ECC004E00E06D2D /* BoxTimeInterval.swift */; };
+		84E745FE1EEFFFA20016A56F /* IndividualOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E745FD1EEFFFA20016A56F /* IndividualOrderView.swift */; };
+		84E746001EF000BC0016A56F /* IndividualOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E745FF1EF000BC0016A56F /* IndividualOrderViewController.swift */; };
 		84E866611EBDB1A70044B56A /* CarWash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E866601EBDB1A70044B56A /* CarWash.swift */; };
 		84E866631EBDBB6F0044B56A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E866621EBDBB6F0044B56A /* User.swift */; };
 		84E9B6BF1EBF024F0047E25B /* AllPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E9B6BE1EBF024F0047E25B /* AllPlaceView.swift */; };
@@ -99,6 +101,8 @@
 		84D5AC421EBCFC1C00B78791 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		84D5AC441EBD07E900B78791 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		84E0D0AE1ECC004E00E06D2D /* BoxTimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxTimeInterval.swift; sourceTree = "<group>"; };
+		84E745FD1EEFFFA20016A56F /* IndividualOrderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndividualOrderView.swift; sourceTree = "<group>"; };
+		84E745FF1EF000BC0016A56F /* IndividualOrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndividualOrderViewController.swift; sourceTree = "<group>"; };
 		84E866601EBDB1A70044B56A /* CarWash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarWash.swift; sourceTree = "<group>"; };
 		84E866621EBDBB6F0044B56A /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		84E9B6BE1EBF024F0047E25B /* AllPlaceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPlaceView.swift; sourceTree = "<group>"; };
@@ -164,6 +168,7 @@
 				84AB7B1C1ED4290B00D40912 /* OrderCollectionViewCell.swift */,
 				845D21FC1EE95D520053B630 /* ProgressIndicatorView.swift */,
 				849C23091EED5C750071ADBD /* AccountView.swift */,
+				84E745FD1EEFFFA20016A56F /* IndividualOrderView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 				8441B9121EB7B4B5008FAB0C /* WelcomeViewController.swift */,
 				84D5AC441EBD07E900B78791 /* LoginViewController.swift */,
 				8407C0931EC1E7580066EA4F /* IndividualCarwashViewController.swift */,
+				84E745FF1EF000BC0016A56F /* IndividualOrderViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -406,6 +412,7 @@
 				8460B4281EE6B59100DB7A71 /* CarWashInfo.swift in Sources */,
 				84FB5E001EB7007C00B24F73 /* FavoritePlaceViewController.swift in Sources */,
 				84FB5E061EB700A700B24F73 /* AccountViewController.swift in Sources */,
+				84E746001EF000BC0016A56F /* IndividualOrderViewController.swift in Sources */,
 				84D5AC451EBD07E900B78791 /* LoginViewController.swift in Sources */,
 				84FB5E021EB7008E00B24F73 /* AllPlaceViewController.swift in Sources */,
 				84E866631EBDBB6F0044B56A /* User.swift in Sources */,
@@ -435,6 +442,7 @@
 				843444341EB9AE3900203C11 /* ApiHelper.swift in Sources */,
 				84FB5DEE1EB6FEDE00B24F73 /* AppDelegate.swift in Sources */,
 				8441B9111EB7B2B5008FAB0C /* WelcomeView.swift in Sources */,
+				84E745FE1EEFFFA20016A56F /* IndividualOrderView.swift in Sources */,
 				84AB7B181ED423AC00D40912 /* OrderView.swift in Sources */,
 				84E9B6BF1EBF024F0047E25B /* AllPlaceView.swift in Sources */,
 				84FB5E041EB7009900B24F73 /* OrderViewController.swift in Sources */,

@@ -9,6 +9,10 @@
 import UIKit
 import RealmSwift
 
+protocol SelectFavoriteDelegate : class {
+    func selectFavorite(carwash: CarWash)
+}
+
 class FavoritePlaceView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let screenBounds = UIScreen.main.bounds
@@ -18,6 +22,8 @@ class FavoritePlaceView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     var refreshControl = UIRefreshControl()
     
     var carwashArray = [CarWash]()
+    
+    weak var delegate: SelectFavoriteDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -111,6 +117,10 @@ class FavoritePlaceView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return self.screenBounds.width*0.025
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.selectFavorite(carwash: carwashArray[indexPath.row])
     }
 
 }

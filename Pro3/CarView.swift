@@ -16,6 +16,7 @@ class CarView: UIView, UITableViewDelegate, UITableViewDataSource {
     
     weak var delegate: SelectCarDelegate?
     
+    var titleLabel = UILabel()
     var tableView = UITableView()
     var activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
     
@@ -35,12 +36,24 @@ class CarView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         self.backgroundColor = UIColor.white
         
-        self.activityIndicatorView.center = CGPoint(x: self.frame.origin.x/2, y: self.frame.origin.y/2)
-        self.addSubview(self.activityIndicatorView)
+        self.clipsToBounds = true
         
-        self.tableView = UITableView(frame: CGRect(x: 10, y: self.frame.size.height*0.1, width: self.frame.size.width-20, height: self.frame.size.height*0.9-10))
+        self.titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height*0.2))
+        self.titleLabel.text = "Выберите город"
+        self.titleLabel.textAlignment = .center
+        self.titleLabel.textColor = UIColor.white
+        self.titleLabel.backgroundColor = UIColor().mainColor()
+        self.addSubview(self.titleLabel)
+        
+        self.tableView = UITableView(frame: CGRect(x: 10, y: self.frame.size.height*0.2, width: self.frame.size.width-20, height: self.frame.size.height*0.8))
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CarCell")
+        self.tableView.rowHeight = self.frame.height*0.8/4
+        self.tableView.separatorStyle = .none
         self.addSubview(self.tableView)
+        
+        self.activityIndicatorView.center = CGPoint(x: self.frame.width/2, y: self.frame.height*0.6)
+        self.activityIndicatorView.tintColor = UIColor().mainColor()
+        self.addSubview(self.activityIndicatorView)
         
         self.tableView.delegate = self
         self.tableView.dataSource = self

@@ -11,6 +11,7 @@ import RealmSwift
 
 protocol DismissRegisterViewControllerDelegate : class {
     func dismissViewController()
+    func presentAlertController(message: String)
 }
 
 class RegisterView: UIView, SelectCityDelegate, SelectCarDelegate, UITextFieldDelegate {
@@ -33,13 +34,17 @@ class RegisterView: UIView, SelectCityDelegate, SelectCarDelegate, UITextFieldDe
     var autoButton = UIButton()
     var createButton = UIButton()
     var loginButton = UIButton()
+    var closeButton = UIButton()
     var progressView = ProgressIndicatorView()
+    
+    let blurEffect = UIBlurEffect(style: .light)
+    var visualEffectView = UIVisualEffectView()
     
     var cityView = CityView()
     var carView = CarView()
     
-    var cityId = String()
-    var carId = String()
+    var cityId: String?
+    var carId: String?
     
     let screenBounds = UIScreen.main.bounds
     
@@ -93,7 +98,7 @@ class RegisterView: UIView, SelectCityDelegate, SelectCarDelegate, UITextFieldDe
     func createButtonPressed() {
         
         guard let phoneNumber = self.phoneTextfield.text else {
-            print("Enter phone number")
+            self.delegate?.presentAlertController(message: "Enter phone number")
             return
         }
         
@@ -106,28 +111,46 @@ class RegisterView: UIView, SelectCityDelegate, SelectCarDelegate, UITextFieldDe
         }
         
         guard let name = self.nameTextfield.text else {
-            print("Enter name")
+            self.delegate?.presentAlertController(message: "Введите ваше имя")
             return
         }
         
         guard let password = self.passwordTextfield.text else {
-            print("Enter password")
+            self.delegate?.presentAlertController(message: "Введите пароль")
             return
         }
         
         guard let confirmPassword = self.confirmPasswordTextfield.text else {
-            print("Confirm password")
+            self.delegate?.presentAlertController(message: "Потвердите пароль")
             return
         }
         
         if password != confirmPassword {
-            print("Password does not match")
+            self.delegate?.presentAlertController(message: "Проверьте совпадение пароля")
+            return
+        }
+        
+        if phoneNumber.characters.count == 0 || name.characters.count == 0 ||
+           name.characters.count == 0 || password.characters.count == 0 || confirmPassword.characters.count == 0 {
+            self.progressView.isHidden = true
+            self.delegate?.presentAlertController(message: "Пожалуйста, заполните пустые поля")
+        }
+    
+        guard let city = self.cityId else {
+            self.delegate?.presentAlertController(message: "Мы будем рады если вы укажите ваш город :)")
+            return
+        }
+        
+        guard let car = self.carId else {
+            self.delegate?.presentAlertController(message: "Пожалуйста, укажите ваш тип автомобиля")
             return
         }
         
         self.progressView.isHidden = false
         
-        ApiHelper.registerUser(phoneNumber: phoneString as String, name: name, password: password, confirmPassword: confirmPassword, cityId: cityId, carId: carId, completion: {
+        ApiHelper.registerUser(phoneNumber: phoneString as String, name: name, password: password, confirmPassword: confirmPassword, cityId: city, carId: car, completion: {
+            self.delegate?.presentAlertController(message: "Ошибка аутентификации")
+        }, dismissController: {
             self.delegate?.dismissViewController()
         })
     }
@@ -148,15 +171,28 @@ class RegisterView: UIView, SelectCityDelegate, SelectCarDelegate, UITextFieldDe
         }
     }
     
+    func closeButtonPressed() {
+        
+        UIView.animate(withDuration: 0.5) {
+            self.cityView.frame = CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*1.25, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.5)
+            self.carView.frame = CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*1.25, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.5)
+            self.visualEffectView.isHidden = true
+            self.closeButton.isHidden = true
+        }
+    }
+    
     func animateCityView() {
         
         UIView.animate(withDuration: 0.5) {
             if(self.cityView.frame.origin.y == self.screenBounds.height*0.25) {
                 self.cityView.frame = CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*1.25, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.5)
+                self.visualEffectView.isHidden = true
+                self.closeButton.isHidden = true
             } else {
                 self.cityView.frame = CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*0.25, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.5)
+                self.visualEffectView.isHidden = false
+                self.closeButton.isHidden = false
             }
-            self.carView.frame = CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*1.25, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.5)
         }
     }
     
@@ -165,10 +201,13 @@ class RegisterView: UIView, SelectCityDelegate, SelectCarDelegate, UITextFieldDe
         UIView.animate(withDuration: 0.5) {
             if(self.carView.frame.origin.y == self.screenBounds.height*0.25) {
                 self.carView.frame = CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*1.25, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.5)
+                self.visualEffectView.isHidden = true
+                self.closeButton.isHidden = true
             } else {
                 self.carView.frame = CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*0.25, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.5)
+                self.visualEffectView.isHidden = false
+                self.closeButton.isHidden = false
             }
-            self.cityView.frame = CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*1.25, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.5)
         }
     }
     
@@ -216,9 +255,29 @@ class RegisterView: UIView, SelectCityDelegate, SelectCarDelegate, UITextFieldDe
         }
     }
     
+    func hideKeyboard() {
+        
+        phoneTextfield.resignFirstResponder()
+        nameTextfield.resignFirstResponder()
+        passwordTextfield.resignFirstResponder()
+        confirmPasswordTextfield.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        phoneTextfield.resignFirstResponder()
+        nameTextfield.resignFirstResponder()
+        passwordTextfield.resignFirstResponder()
+        confirmPasswordTextfield.resignFirstResponder()
+        return false
+    }
+    
     func setup() {
         
         self.backgroundColor = UIColor.white
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        self.addGestureRecognizer(tapRecognizer)
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.text = "Имя"
@@ -337,6 +396,11 @@ class RegisterView: UIView, SelectCityDelegate, SelectCarDelegate, UITextFieldDe
         loginButton.titleLabel?.font = UIFont().risingSun()
         self.addSubview(loginButton)
         
+        self.visualEffectView = UIVisualEffectView(effect: blurEffect)
+        self.visualEffectView.frame = self.screenBounds
+        self.visualEffectView.isHidden = true
+        self.addSubview(self.visualEffectView)
+        
         self.cityView = CityView(frame: CGRect(x: self.screenBounds.width*0.15, y: self.screenBounds.height*1.25, width: self.screenBounds.width*0.7, height: self.screenBounds.height*0.5))
         self.cityView.layer.cornerRadius = 5
         self.cityView.delegate = self
@@ -346,12 +410,19 @@ class RegisterView: UIView, SelectCityDelegate, SelectCarDelegate, UITextFieldDe
         self.carView.layer.cornerRadius = 5
         self.carView.delegate = self
         self.addSubview(self.carView)
-        
-        self.progressView = ProgressIndicatorView(frame: CGRect(x: frame.width*0.35, y: frame.height*0.3, width: frame.width*0.3, height: frame.width*0.3))
+    
+        self.progressView = ProgressIndicatorView(frame: CGRect(x: self.screenBounds.width*0.35, y: self.screenBounds.height*0.41, width: self.screenBounds.width*0.3, height: self.screenBounds.height*0.18))
         self.progressView.layer.cornerRadius = 5
-        self.progressView.messageLabel.text = "Загружаю данные"
+        self.progressView.messageLabel.text = "Создаю аккаунт"
         self.progressView.messageLabel.font = UIFont().risingSunSmall()
+        self.progressView.isHidden = true
         self.addSubview(self.progressView)
+        
+        self.closeButton = UIButton(frame: CGRect(x: self.screenBounds.width*0.5-27, y: self.screenBounds.height*0.8, width: 54, height: 54))
+        self.closeButton.setImage(UIImage(named: "close"), for: .normal)
+        self.closeButton.addTarget(self, action: #selector(self.closeButtonPressed), for: .touchUpInside)
+        self.closeButton.isHidden = true
+        self.addSubview(self.closeButton)
     }
     
     func addViewConstraints() {
@@ -451,7 +522,6 @@ class RegisterView: UIView, SelectCityDelegate, SelectCarDelegate, UITextFieldDe
         self.addConstraints([NSLayoutConstraint(item: self.autoButton, attribute: .left, relatedBy: .equal, toItem: self.autoTypeLabel, attribute: .left, multiplier: 1.0, constant: 1.0)])
         self.addConstraints([NSLayoutConstraint(item: self.autoButton, attribute: .width, relatedBy: .equal, toItem: self.autoTypeLabel, attribute: .width, multiplier: 1.0, constant: 1.0)])
         self.addConstraints([NSLayoutConstraint(item: self.autoButton, attribute: .height, relatedBy: .equal, toItem: self.nameTextfield, attribute: .height, multiplier: 1.0, constant: 1.0)])
-      
     }
 
 }

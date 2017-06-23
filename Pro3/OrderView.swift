@@ -9,14 +9,21 @@
 import UIKit
 import RealmSwift
 
+protocol SelectOrderDelegate : class {
+    func selectOrder(order: Order)
+}
+
 class OrderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     lazy var collectionView = UICollectionView()
+    var progressView = ProgressIndicatorView()
     var refreshControl = UIRefreshControl()
     
     let screenBounds = UIScreen.main.bounds
     
     var orders = [Order]()
+    
+    weak var delegate : SelectOrderDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,7 +38,6 @@ class OrderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, U
         let realm = try! Realm()
         let user = realm.objects(User.self)
         
-        
         if user.count > 0 {
         
             ApiHelper.getAllOrders(token: user[0].token) { (orders) in
@@ -39,6 +45,7 @@ class OrderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, U
                 DispatchQueue.main.async {
                     self.orders = orders
                     self.collectionView.reloadData()
+                    self.progressView.isHidden = true
                     self.refreshControl.endRefreshing()
                 }
             }
@@ -69,6 +76,12 @@ class OrderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, U
         self.collectionView.addSubview(self.refreshControl)
         self.collectionView.alwaysBounceVertical = true
         self.addSubview(self.collectionView)
+        
+        self.progressView = ProgressIndicatorView(frame: CGRect(x: frame.width*0.35, y: frame.height*0.3, width: frame.width*0.3, height: frame.width*0.32))
+        self.progressView.layer.cornerRadius = 5
+        self.progressView.messageLabel.text = "Загружаю заказы"
+        self.progressView.messageLabel.font = UIFont().risingSunSmall()
+        self.addSubview(self.progressView)
     }
     
     func compareDate(dateInitial:Date, dateFinal:Date) -> Bool {
@@ -103,6 +116,7 @@ class OrderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, U
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        let endDate = dateFormatter.date(from: self.orders[indexPath.row].endTime)
         let startDate = dateFormatter.date(from: self.orders[indexPath.row].startTime)
         
         var calendar = Calendar.current
@@ -112,15 +126,19 @@ class OrderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, U
         let month = components.month!
         let day = components.day!
         
+        let endComponents = calendar.dateComponents([.month, .day, .hour, .minute], from: endDate!)
+        let endHour = String(format: "%02d", Int(endComponents.hour!))
+        let endMinute = String(format: "%02d", Int(endComponents.minute!))
+    
         let hour = String(format: "%02d", Int(components.hour!))
         let minute = String(format: "%02d", Int(components.minute!))
         
-        cell.dateLabel.text = "\(day)/\(month) в \(hour):\(minute)"
+        cell.dateLabel.text = "\(day)/\(month) в \(hour):\(minute) ~ \(endHour):\(endMinute)"
         
-        let currentDate = Date()
-        
+        let minutes = Date().getCurrentLocalDate().minutes(from: endDate!)
+    
         if self.orders[indexPath.row].status == "1" {
-            if compareDate(dateInitial: startDate!, dateFinal: currentDate) {
+            if minutes>0 {
                 cell.activityLabel.text = "Завершен"
                 cell.activityLabel.textColor = UIColor.black
             } else {
@@ -149,7 +167,7 @@ class OrderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, U
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        self.delegate?.selectOrder(order: orders[indexPath.row])
     }
     
     required init?(coder aDecoder: NSCoder) {

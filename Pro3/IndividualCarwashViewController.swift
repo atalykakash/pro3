@@ -38,7 +38,7 @@ class IndividualCarwashViewController: UIViewController, MakeAndUnmakeFavoriteDe
         let locationRightButtonItem = UIBarButtonItem(image: UIImage(named: "notfav")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(makeFavoriteButtonPressed))
         self.navigationItem.rightBarButtonItem = locationRightButtonItem
         
-        let leftBackButtonItem = UIBarButtonItem(image: UIImage(named: "notfav")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
+        let leftBackButtonItem = UIBarButtonItem(image: UIImage(named: "back")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(popViewController))
         self.navigationItem.leftBarButtonItem = leftBackButtonItem
         
         self.individualCarwashView = IndividualCarwashView(frame: CGRect(x: 0, y: 0, width: self.screenBounds.width, height: self.screenBounds.height))

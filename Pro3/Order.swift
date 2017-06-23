@@ -14,8 +14,10 @@ class Order : Object {
     dynamic var id = String()
     dynamic var carwashName = String()
     dynamic var serviceName = String()
+    dynamic var address = String()
     dynamic var carType = String()
     dynamic var price = String()
     dynamic var status = String()
     dynamic var startTime = String()
+    dynamic var endTime = String()
 }

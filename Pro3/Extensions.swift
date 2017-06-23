@@ -39,6 +39,10 @@ extension UIFont {
         return UIFont(name: "RisingSun-Regular", size: UIScreen.main.bounds.width*0.06)!
     }
     
+    func risingSunBig() -> UIFont {
+        return UIFont(name: "RisingSun-Light", size: UIScreen.main.bounds.width*0.06)!
+    }
+    
     func risingSunBlack() -> UIFont {
         return UIFont(name: "RisingSun-Black", size: UIScreen.main.bounds.width*0.05)!
     }
@@ -70,6 +74,27 @@ extension Date {
             let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: Date())
             return dateFormatter.string(from: tomorrow!)
         }
+    }
+    
+    func minutes(from date: Date) -> Int {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone(identifier: "GMT")!
+        return calendar.dateComponents([.minute], from: date, to: self).minute ?? 0
+    }
+    
+    func getCurrentLocalDate()-> Date {
+        var now = Date()
+        var nowComponents = DateComponents()
+        let calendar = Calendar.current
+        nowComponents.year = Calendar.current.component(.year, from: now)
+        nowComponents.month = Calendar.current.component(.month, from: now)
+        nowComponents.day = Calendar.current.component(.day, from: now)
+        nowComponents.hour = Calendar.current.component(.hour, from: now)
+        nowComponents.minute = Calendar.current.component(.minute, from: now)
+        nowComponents.second = Calendar.current.component(.second, from: now)
+        nowComponents.timeZone = TimeZone(abbreviation: "GMT")!
+        now = calendar.date(from: nowComponents)!
+        return now as Date
     }
 
 }
